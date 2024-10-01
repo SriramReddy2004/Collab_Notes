@@ -23,6 +23,6 @@ app.listen(port,() => {
 
     setInterval(()=>{
         fetch("https://collab-notes-97o6.onrender.com")
-    },180000)
+    },840000)
     
 })
