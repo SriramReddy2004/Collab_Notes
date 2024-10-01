@@ -50,26 +50,6 @@ const getAllNotesOfaUser = async (req,res) => {
     }
 }
 
-// const giveAccessToUserByUsername = async (req,res) => {
-//     try{
-//         const { noteId, username, access } = req.body
-//         if(username === req.user.username){
-//             return res.status(401).json({"message": "You have full permission on your notes"})
-//         }
-//         const { _id } = req.user;
-//         const user = await User.findOne({ username })
-//         if(user){
-//             const accessControl = new AccessControl({ ownerId:_id, userId: user._id, noteId, permission: access })
-//             await accessControl.save()
-//             return res.status(200).json({"message": "Permission added successfully"})
-//         }
-//         return res.status(400).json({"message": "User doesnot exist"})
-//     }
-//     catch(e){
-//         return res.status(500).json({"message": "Internal server error"})
-//     }
-// }
-
 const updateNote = async (req,res) => {
     try{
         const { noteId, title, content } = req.body
@@ -78,6 +58,8 @@ const updateNote = async (req,res) => {
         if(access){
             if(access.permission === "full" || access.permission === "write"){
                 const updatedNote = await Note.findByIdAndUpdate({ _id: noteId }, { title, content })
+                updatedNote.title = title
+                updatedNote.content = content
                 return res.status(200).json({"message": "Note updated successfully", "updatedNote": updatedNote})
             }
         }
@@ -90,7 +72,11 @@ const updateNote = async (req,res) => {
 
 const getPermissionsOfaNote = async (req,res) => {
     try{
-        const { _id } = req.body
+        const { noteId } = req.body
+        const noteOwnerId = await Note.findById( noteId ).ownerId
+        if(noteOwnerId !== req.user['_id']){
+            return res.status(403).json({"message": "You can't perform this operation"})
+        }
         const permissions = await AccessControl.find({ noteId: _id, permission: { $ne: "full" } }).populate("userId")
         return res.status(200).json(permissions)
     }
