@@ -10,8 +10,7 @@ router.get("/",(req,res) => {
                 path: "/api/auth/login",
                 body: {
                     "username": "",
-                    "password": "",
-                    "email": ""
+                    "password": ""
                 }
             },
             {
@@ -19,7 +18,8 @@ router.get("/",(req,res) => {
                 path: "/api/auth/register",
                 body: {
                     "username": "",
-                    "password": ""
+                    "password": "",
+                    "email": ""
                 }
             },
             {
@@ -78,6 +78,7 @@ router.get("/",(req,res) => {
                 method: "POST",
                 path: "/api/delete-permission",
                 body: {
+                    "token": "",
                     "_id": ""
                 }
             }
