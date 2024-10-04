@@ -6,6 +6,7 @@ const User = require("../models/user.model");
 
 const loginUser = async (req,res) => {
     try{
+        req.body.username = req.body.username.toLowerCase().trim()
         const { username, password } = req.body;
         const user = await User.findOne({ username })
         if(user){
@@ -19,7 +20,7 @@ const loginUser = async (req,res) => {
                     },
                     process.env.JWT_SECRET,
                     {
-                        expiresIn: 15 * 24 * 60 * 60
+                        expiresIn: 15 * 24 * 60 * 60        // 15 days
                     }
                 )
                 return res.status(200).json({
@@ -43,6 +44,8 @@ const loginUser = async (req,res) => {
 
 const registerUser = async (req,res) => {
     try{
+        req.body.username = req.body.username.toLowerCase().trim()
+        req.body.email = req.body.email.toLowerCase().trim()
         const { username, email, password } = req.body
         const hashedPassword = await bcrypt.hash(password, 13)
         const user = new User({ username, email, password: hashedPassword })
