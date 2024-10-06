@@ -1,3 +1,3 @@
 export default class Constants {
-    static serverUrl = "https://collab-notes-97o6.onrender.com"
+    static serverUrl = "http://localhost:3000"
 }

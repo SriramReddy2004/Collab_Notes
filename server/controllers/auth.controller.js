@@ -23,6 +23,14 @@ const loginUser = async (req,res) => {
                         expiresIn: 15 * 24 * 60 * 60        // 15 days
                     }
                 )
+                res.cookie(
+                    "token",
+                    token,
+                    {
+                        maxAge: 15 * 24 * 60 * 60 * 1000,    // 15 days
+                        httpOnly: true
+                    }
+                )
                 return res.status(200).json({
                     "message": "Login successful",
                     "_id": user._id,

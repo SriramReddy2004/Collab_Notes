@@ -19,7 +19,8 @@ const Login = () => {
   const loginUser = async (formData) => {
     setLoading(true)
     try{
-      const response = await axios.post(`${Constants.serverUrl}/api/auth/login`,formData)
+      const response = await axios.post(`${Constants.serverUrl}/api/auth/login`,formData, { withCredentials: true })
+      console.log(response)
       toast.success(response['data']['message'])
       localStorage.setItem("isLoggedIn", "true")
       localStorage.setItem("email", response['data']['email'])
