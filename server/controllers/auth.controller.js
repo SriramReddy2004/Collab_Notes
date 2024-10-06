@@ -6,7 +6,6 @@ const User = require("../models/user.model");
 
 const loginUser = async (req,res) => {
     try{
-        req.body.username = req.body.username.toLowerCase().trim()
         const { username, password } = req.body;
         const user = await User.findOne({ username })
         if(user){
@@ -29,7 +28,8 @@ const loginUser = async (req,res) => {
                     {
                         maxAge: 15 * 24 * 60 * 60 * 1000,    // 15 days
                         httpOnly: true,
-                        sameSite: "None"
+                        sameSite: "None",
+                        secure: true
                     }
                 )
                 return res.status(200).json({
