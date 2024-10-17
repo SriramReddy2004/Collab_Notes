@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
 
+import 'package:collab_notes/Authentication/Splashscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  runApp(DevicePreview(builder: (context)=>MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(),
+      debugShowCheckedModeBanner: false,
+      home:SplashScreen(),
     );
   }
 }
