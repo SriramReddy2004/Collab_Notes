@@ -12,19 +12,7 @@ const noteSchema = new mongoose.Schema({
     createdBy: {
         type: mongoose.Types.ObjectId,
         ref: "users"
-    },
-    readAllowed: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: "users"
-        }
-    ],
-    writeAllowed: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: "users"
-        }
-    ]
+    }
 } , { timestamps: true })
 
 const Note = mongoose.model("notes",noteSchema)
