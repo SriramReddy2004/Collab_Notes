@@ -27,7 +27,7 @@ app.listen(port,() => {
     connectToDB()
 
     setInterval(()=>{
-        fetch("https://collab-notes-97o6.onrender.com")
+        fetch("https://collab-notes-xxbl.onrender.com")
     },840000)
     
 })
