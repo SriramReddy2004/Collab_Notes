@@ -7,7 +7,12 @@ const User = require("../models/user.model");
 const loginUser = async (req,res) => {
     try{
         const { username, password } = req.body;
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ 
+            $or: [
+                { username: username },
+                { email: username }
+            ]
+         })
         if(user){
             const isValidPassword = await bcrypt.compare(password, user.password)
             if(isValidPassword){
