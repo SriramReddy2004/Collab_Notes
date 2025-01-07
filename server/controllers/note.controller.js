@@ -39,6 +39,40 @@ const deleteNote = async (req,res) => {
     }
 }
 
+const getOwnNotesOfAUser = async (req, res) => {
+    try{
+        const { _id } = req.user;
+        const ownNotes = await AccessControl.find({ userId: _id, permission: "full" }).populate("noteId").select("-permission -userId")
+        return res.status(200).json(ownNotes)
+    }
+    catch(e) {
+        return res.status(500).json({"message": "Internal server error"})
+    }
+}
+
+const getReadableNotesOfAUser = async (req, res) => {
+    try{
+        const { _id } = req.user;
+        const ownNotes = await AccessControl.find({ userId: _id, permission: "read" }).populate("noteId").select("-permission -userId")
+        return res.status(200).json(ownNotes)
+    }
+    catch(e) {
+        return res.status(500).json({"message": "Internal server error"})
+    }
+}
+
+const getEditableNotesOfAUser = async (req, res) => {
+    try{
+        const { _id } = req.user;
+        const ownNotes = await AccessControl.find({ userId: _id, permission: "write" }).populate("noteId").select("-permission -userId")
+        return res.status(200).json(ownNotes)
+    }
+    catch(e) {
+        return res.status(500).json({"message": "Internal server error"})
+    }
+}
+
+
 const getAllNotesOfaUser = async (req,res) => {
     try{
         const { _id } = req.user;
@@ -85,4 +119,4 @@ const getPermissionsOfaNote = async (req,res) => {
     }
 }
 
-module.exports = { createNote, deleteNote, getAllNotesOfaUser, updateNote, getPermissionsOfaNote }
+module.exports = { createNote, deleteNote, getAllNotesOfaUser, updateNote, getPermissionsOfaNote, getOwnNotesOfAUser, getReadableNotesOfAUser, getEditableNotesOfAUser }

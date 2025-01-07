@@ -6,7 +6,7 @@ const accessControlRouter = require('./accessControl.route')
 
 const router = express.Router()
 
-router.use(documentation)
+// router.use(documentation)
 router.use("/auth",authRouter)
 router.use(noteRouter)
 router.use(accessControlRouter)
