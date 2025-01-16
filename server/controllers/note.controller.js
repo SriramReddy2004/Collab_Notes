@@ -8,11 +8,14 @@ const createNote = async (req,res) => {
         const { _id } = req.user;
         const note = new Note({ title, content, createdBy: _id })
         const access = new AccessControl({ ownerId: _id, userId: _id, noteId: note._id, permission: "full" })
-        await Promise.all([
+        const [savedNote, savedPermission] = await Promise.all([
             note.save(),            // for concurrent execution
             access.save()
         ])
-        return res.status(200).json({"message": "Note created successfully"})
+        return res.status(200).json({
+            "note": savedNote,
+            "message": "Note created successfully"
+        })
     }
     catch(e){
         console.log(e)
