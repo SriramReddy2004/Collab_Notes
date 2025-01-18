@@ -12,7 +12,7 @@ const createNote = async (req,res) => {
             note.save(),            // for concurrent execution
             access.save()
         ])
-        return res.status(200).json({
+        return res.status(201).json({
             "note": savedNote,
             "message": "Note created successfully"
         })
