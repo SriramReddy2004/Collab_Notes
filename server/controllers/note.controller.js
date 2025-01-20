@@ -110,7 +110,7 @@ const updateNote = async (req,res) => {
 const getPermissionsOfaNote = async (req,res) => {
     try{
         const { noteId } = req.body
-        const noteOwnerId = await Note.findById( noteId ).ownerId
+        const noteOwnerId = (await Note.findById( noteId )).ownerId
         if(noteOwnerId !== req.user['_id']){
             return res.status(403).json({"message": "You can't perform this operation"})
         }
