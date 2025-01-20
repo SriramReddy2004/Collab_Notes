@@ -12,9 +12,9 @@ const giveAccessToUserByUsername = async (req,res) => {
         if(user){
             const accessControl = new AccessControl({ ownerId:_id, userId: user._id, noteId, permission: access })
             await accessControl.save()
-            return res.status(200).json({"message": "Permission added successfully"})
+            return res.status(201).json({"message": "Permission added successfully", accessControl})
         }
-        return res.status(400).json({"message": "User doesnot exist"})
+        return res.status(404).json({"message": "User doesnot exist"})
     }
     catch(e){
         return res.status(500).json({"message": "Internal server error"})
