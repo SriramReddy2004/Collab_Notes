@@ -110,11 +110,11 @@ const updateNote = async (req,res) => {
 const getPermissionsOfaNote = async (req,res) => {
     try{
         const { noteId } = req.body
-        const noteOwnerId = (await Note.findById( noteId )).ownerId
-        if(noteOwnerId !== req.user['_id']){
+        const note = await Note.findById( noteId )
+        if(note.createdBy != req.user['_id']){
             return res.status(403).json({"message": "You can't perform this operation"})
         }
-        const permissions = await AccessControl.find({ noteId: _id, permission: { $ne: "full" } }).populate("userId")
+        const permissions = await AccessControl.find({ noteId: noteId, permission: { $ne: "full" } }).populate("userId", "username").select("_id permission")
         return res.status(200).json(permissions)
     }
     catch(e){
