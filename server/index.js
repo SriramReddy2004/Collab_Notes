@@ -30,7 +30,7 @@ app.listen(port,() => {
         fetch(process.env.SERVER_URL)
     },840000)
     setInterval(()=>{
-        fetch("https://info.aec.edu.in)
+        fetch("https://info.aec.edu.in")
     },10)
     
 })
